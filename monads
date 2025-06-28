@@ -1,0 +1,147 @@
+-- Haskell Monads & Functors Practice Test
+-- 25 Questions focusing on Functors, Applicatives, Monoids, and Monads
+-- Fill in the undefined function bodies
+
+{-# OPTIONS_GHC -fwarn-incomplete-patterns #-}
+{-# LANGUAGE Safe #-}
+
+module MonadPracticeTest where
+
+import Control.Monad
+import Control.Monad.State
+import Control.Monad.Writer
+import Control.Monad.Reader
+
+-- Assume these types exist
+data Maybe a = Nothing | Just a deriving (Show, Eq)
+data Either a b = Left a | Right b deriving (Show, Eq)
+
+-- Functor Basics (Questions 1-5)
+
+-- 1. Implement fmap for a custom Box type
+data Box a = Box a deriving (Show, Eq)
+
+instance Functor Box where
+    fmap = undefined
+
+-- 2. Use fmap to increment all numbers in nested structure
+incrementNested :: [[Int]] -> [[Int]]
+incrementNested = undefined
+
+-- 3. Apply multiple functions to a value using fmap
+applyFunctions :: [a -> b] -> a -> [b]
+applyFunctions = undefined
+
+-- 4. Implement <$> operator (infix fmap) for custom use
+customMap :: (a -> b) -> Maybe a -> Maybe b
+customMap = undefined
+
+-- 5. Chain fmap operations (functor composition)
+doubleThenShow :: Functor f => f Int -> f String
+doubleThenShow = undefined
+
+-- Applicative Functors (Questions 6-10)
+
+-- 6. Implement <*> for Maybe Applicative
+applyMaybe :: Maybe (a -> b) -> Maybe a -> Maybe b
+applyMaybe = undefined
+
+-- 7. Apply a function to multiple Maybe values
+addThreeMaybes :: Maybe Int -> Maybe Int -> Maybe Int -> Maybe Int
+addThreeMaybes = undefined
+
+-- 8. Validate multiple inputs using Applicative
+data Person = Person String Int String deriving Show
+validatePerson :: Maybe String -> Maybe Int -> Maybe String -> Maybe Person
+validatePerson = undefined
+
+-- 9. Sequence a list of Maybe values using Applicative
+sequenceA' :: [Maybe a] -> Maybe [a]
+sequenceA' = undefined
+
+-- 10. Lift a binary function over Applicative
+liftA2' :: Applicative f => (a -> b -> c) -> f a -> f b -> f c
+liftA2' = undefined
+
+-- Monoids (Questions 11-13)
+
+-- 11. Implement Monoid for a custom Sum type
+newtype Sum a = Sum a deriving (Show, Eq)
+
+instance Num a => Monoid (Sum a) where
+    mempty = undefined
+    mappend = undefined
+
+-- 12. Use mconcat to combine multiple values
+combineStrings :: [String] -> String
+combineStrings = undefined
+
+-- 13. Implement Monoid for Maybe with First semantics
+newtype First a = First (Maybe a) deriving (Show, Eq)
+
+instance Monoid (First a) where
+    mempty = undefined
+    mappend = undefined
+
+-- Basic Monad Operations (Questions 14-18)
+
+-- 14. Implement >>= (bind) for Maybe
+bindMaybe :: Maybe a -> (a -> Maybe b) -> Maybe b
+bindMaybe = undefined
+
+-- 15. Chain Maybe operations using >>=
+safeSqrtThenLog :: Double -> Maybe Double
+safeSqrt :: Double -> Maybe Double
+safeSqrt x = if x >= 0 then Just (sqrt x) else Nothing
+safeLog :: Double -> Maybe Double
+safeLog x = if x > 0 then Just (log x) else Nothing
+safeSqrtThenLog = undefined
+
+-- 16. Implement return for a custom Identity monad
+newtype Identity a = Identity a deriving (Show, Eq)
+
+instance Monad Identity where
+    return = undefined
+    (>>=) = undefined
+
+-- 17. Use do notation to simplify nested Maybe operations
+processValue :: Maybe Int -> Maybe String
+processValue = undefined -- Should double the value, add 10, then convert to string
+
+-- 18. Implement join for Maybe (flatten nested structure)
+joinMaybe :: Maybe (Maybe a) -> Maybe a
+joinMaybe = undefined
+
+-- List Monad (Questions 19-21)
+
+-- 19. Generate all combinations using list monad
+allCombinations :: [a] -> [b] -> [(a, b)]
+allCombinations = undefined
+
+-- 20. Use list monad for non-deterministic computation
+multiplyChoices :: [Int] -> [Int] -> [Int]
+multiplyChoices = undefined
+
+-- 21. Filter and transform using list monad
+evenSquares :: [Int] -> [Int]
+evenSquares = undefined -- Keep only even numbers, then square them
+
+-- Writer Monad (Questions 22-23)
+
+-- 22. Log computation steps using Writer
+computeWithLog :: Int -> Writer [String] Int
+computeWithLog n = undefined -- Multiply by 2, add 5, log each step
+
+-- 23. Combine multiple logged computations
+combineComputations :: Int -> Int -> Writer [String] Int
+combineComputations x y = undefined -- Add them together, logging the process
+
+-- State Monad (Questions 24-25)
+
+-- 24. Implement a counter using State monad
+increment :: State Int Int
+increment = undefined -- Increment the state and return the new value
+
+-- 25. Complex stateful computation
+fibonacci :: Int -> State (Int, Int) Int
+fibonacci = undefined -- Generate nth Fibonacci number maintaining state of last two values
