@@ -59,13 +59,14 @@ flatten = undefined
 
 -- 9. Take every nth element from a list
 takeEveryN :: Int -> [a] -> [a]
-takeEveryN = undefined
+takeEveryN _ [] = []
+takeEveryN n xs = [ x | (x, i) <- zip xs [1..], i `mod` n == 0]
 
 -- 10. Split a list at a given position
 splitAt' :: Int -> [a] -> ([a], [a])
-splitAt' = undefined
+splitAt' _ [] = ([], [])
+splitAt' n xs = ([x | (x, i) <- zip xs [1..], i <= n], [x | (x, i) <- zip xs [1..], i > n])
 
--- Higher-Order Functions and List Comprehensions (Questions 11-20)
 
 -- 11. Apply a function n times
 applyN :: Int -> (a -> a) -> a -> a
