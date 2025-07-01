@@ -6,6 +6,7 @@
 {-# LANGUAGE Safe #-}
 
 module PracticeTest where
+import Distribution.Simple.Utils (xargs)
 
 -- Assume these types are defined elsewhere
 data Tree a = Leaf a | Branch (Tree a) (Tree a) deriving (Show, Eq)
@@ -70,11 +71,16 @@ splitAt' n xs = ([x | (x, i) <- zip xs [1..], i <= n], [x | (x, i) <- zip xs [1.
 
 -- 11. Apply a function n times
 applyN :: Int -> (a -> a) -> a -> a
-applyN = undefined
+applyN 0 _ x = x
+applyN n f x = apply (n-1) f (f x)
+
 
 -- 12. Filter elements using a predicate and transform them
 filterMap :: (a -> Bool) -> (a -> b) -> [a] -> [b]
-filterMap = undefined
+filterMap _ _ [] = []
+filterMap p f (x:xs)
+  | p x = f x : filterMap p f xs
+  | otherwise = filterMap p f xs
 
 -- 13. Find first element satisfying a condition
 findFirst :: (a -> Bool) -> [a] -> Maybe a
