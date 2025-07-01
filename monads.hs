@@ -1,115 +1,216 @@
--- Haskell Monads & Functors Practice Test
--- 25 Questions focusing on Functors, Applicatives, Monoids, and Monads
--- Fill in the undefined function bodies
+-- 50 Monad Questions
+-- Focus on monadic concepts, ranging from basic to advanced
 
-{-# OPTIONS_GHC -fwarn-incomplete-patterns #-}
-{-# LANGUAGE Safe #-}
+-- Basic Monad Operations (Questions 1-10)
 
-module MonadPracticeTest where
+-- 1. Define the `Maybe` Monad
+maybeMonad :: Maybe Int -> Maybe Int
+maybeMonad = undefined
 
-data Box a = Box a deriving (Show, Eq)
-
-instance Functor Box where
-    fmap = undefined
-
--- 2. Use fmap to increment all numbers in nested structure
-incrementNested :: [[Int]] -> [[Int]]
-incrementNested = undefined
-
--- 3. Apply multiple functions to a value using fmap
-applyFunctions :: [a -> b] -> a -> [b]
-applyFunctions = undefined
-
--- 4. Implement <$> operator (infix fmap) for custom use
-customMap :: (a -> b) -> Maybe a -> Maybe b
-customMap = undefined
-
--- 5. Chain fmap operations (functor composition)
-doubleThenShow :: Functor f => f Int -> f String
-doubleThenShow = undefined
-
--- Applicative Functors (Questions 6-10)
-
--- 6. Implement <*> for Maybe Applicative
-applyMaybe :: Maybe (a -> b) -> Maybe a -> Maybe b
-applyMaybe = undefined
-
--- 7. Apply a function to multiple Maybe values
-addThreeMaybes :: Maybe Int -> Maybe Int -> Maybe Int -> Maybe Int
-addThreeMaybes = undefined
-
--- 8. Validate multiple inputs using Applicative
-data Person = Person String Int String deriving Show
-validatePerson :: Maybe String -> Maybe Int -> Maybe String -> Maybe Person
-validatePerson = undefined
-
--- 9. Sequence a list of Maybe values using Applicative
-sequenceA' :: [Maybe a] -> Maybe [a]
-sequenceA' = undefined
-
--- 10. Lift a binary function over Applicative
-liftA2' :: Applicative f => (a -> b -> c) -> f a -> f b -> f c
-liftA2' = undefined
-
--- Monoids (Questions 11-13)
-
--- 11. Implement Monoid for a custom Sum type
-newtype Sum a = Sum a deriving (Show, Eq)
-
-instance Num a => Monoid (Sum a) where
-    mempty = undefined
-    mappend = undefined
-
--- 12. Use mconcat to combine multiple values
-combineStrings :: [String] -> String
-combineStrings = undefined
-
--- 13. Implement Monoid for Maybe with First semantics
-newtype First a = First (Maybe a) deriving (Show, Eq)
-
-instance Monoid (First a) where
-    mempty = undefined
-    mappend = undefined
-
--- Basic Monad Operations (Questions 14-18)
-
--- 14. Implement >>= (bind) for Maybe
-bindMaybe :: Maybe a -> (a -> Maybe b) -> Maybe b
+-- 2. Simple `Maybe` Binding
+bindMaybe :: Maybe Int -> Maybe Int
 bindMaybe = undefined
 
--- 15. Chain Maybe operations using >>=
-safeSqrtThenLog :: Double -> Maybe Double
-safeSqrt :: Double -> Maybe Double
-safeSqrt x = if x >= 0 then Just (sqrt x) else Nothing
-safeLog :: Double -> Maybe Double
-safeLog x = if x > 0 then Just (log x) else Nothing
-safeSqrtThenLog = undefined
+-- 3. `Maybe` Monad with a Function
+addOne :: Maybe Int -> Maybe Int
+addOne = undefined
 
--- 16. Implement return for a custom Identity monad
-newtype Identity a = Identity a deriving (Show, Eq)
+-- 4. `Maybe` Monad with `fmap`
+fmapMaybe :: Maybe Int -> Maybe Int
+fmapMaybe = undefined
 
-instance Monad Identity where
-    return = undefined
-    (>>=) = undefined
+-- 5. `Nothing` and `Just` Behavior with `>>=`
+nothingJustBehavior :: Maybe Int -> Maybe Int
+nothingJustBehavior = undefined
 
--- 17. Use do notation to simplify nested Maybe operations
-processValue :: Maybe Int -> Maybe String
-processValue = undefined -- Should double the value, add 10, then convert to string
+-- 6. `Either` Monad Basics
+eitherMonad :: Either String Int -> Either String Int
+eitherMonad = undefined
 
--- 18. Implement join for Maybe (flatten nested structure)
-joinMaybe :: Maybe (Maybe a) -> Maybe a
-joinMaybe = undefined
+-- 7. Using `>>=` with `Either`
+bindEither :: Either String Int -> Either String Int
+bindEither = undefined
 
--- List Monad (Questions 19-21)
+-- 8. Write a `Maybe` Function That Combines Values
+combineMaybe :: Maybe Int -> Maybe Int -> Maybe Int
+combineMaybe = undefined
 
--- 19. Generate all combinations using list monad
-allCombinations :: [a] -> [b] -> [(a, b)]
-allCombinations = undefined
+-- 9. `Maybe` Monad with `liftM2`
+liftM2Maybe :: Maybe Int -> Maybe Int -> Maybe Int
+liftM2Maybe = undefined
 
--- 20. Use list monad for non-deterministic computation
-multiplyChoices :: [Int] -> [Int] -> [Int]
-multiplyChoices = undefined
+-- 10. List Monad Basics
+listMonad :: [Int] -> [Int]
+listMonad = undefined
 
--- 21. Filter and transform using list monad
-evenSquares :: [Int] -> [Int]
-evenSquares = undefined -- Keep only even numbers, then square them
+
+-- Intermediate Monad Operations (Questions 11-20)
+
+-- 11. Chaining `Maybe` Values
+chainMaybe :: Maybe Int -> Maybe Int -> Maybe Int
+chainMaybe = undefined
+
+-- 12. Using `do` Notation with `Maybe`
+doNotationMaybe :: Maybe Int -> Maybe Int
+doNotationMaybe = undefined
+
+-- 13. `Reader` Monad Basics
+readerMonad :: Reader String String
+readerMonad = undefined
+
+-- 14. Using `Reader` Monad
+readerExample :: Reader String String
+readerExample = undefined
+
+-- 15. Chaining `Reader` Monad with `>>=`
+bindReader :: Reader String String -> Reader String String
+bindReader = undefined
+
+-- 16. `State` Monad Basics
+stateMonad :: State Int Int
+stateMonad = undefined
+
+-- 17. Using `State` Monad
+stateExample :: State Int Int
+stateExample = undefined
+
+-- 18. Combining `State` and `Reader` Monads
+combineStateReader :: StateT Int (Reader String) Int
+combineStateReader = undefined
+
+-- 19. `Writer` Monad Basics
+writerMonad :: Writer String Int
+writerMonad = undefined
+
+-- 20. Using `Writer` Monad
+writerExample :: Writer String Int
+writerExample = undefined
+
+
+-- Advanced Monad Operations (Questions 21-30)
+
+-- 21. `Maybe` Monad with Error Handling
+maybeWithErrorHandling :: Maybe Int -> Maybe Int -> Either String Int
+maybeWithErrorHandling = undefined
+
+-- 22. Using `State` Monad for Multiple Steps
+stateSteps :: State Int Int
+stateSteps = undefined
+
+-- 23. Composing `State` and `Reader` Monads
+composeStateReader :: StateT Int (Reader String) Int
+composeStateReader = undefined
+
+-- 24. `List` Monad and `>>=`
+listMonadBind :: [Int] -> [Int]
+listMonadBind = undefined
+
+-- 25. Implementing `foldM`
+foldMExample :: Monad m => (b -> a -> m b) -> b -> [a] -> m b
+foldMExample = undefined
+
+-- 26. Using `Maybe` for Validation
+validateMaybe :: Maybe String -> Maybe Int
+validateMaybe = undefined
+
+-- 27. Nested Monads: Flattening `Maybe (Maybe a)`
+flattenMaybe :: Maybe (Maybe Int) -> Maybe Int
+flattenMaybe = undefined
+
+-- 28. `IO` Monad Basics
+ioMonad :: IO String
+ioMonad = undefined
+
+-- 29. Using `IO` Monad with `do` Notation
+ioExample :: IO String
+ioExample = undefined
+
+-- 30. Using `Either` for Validation
+validateEither :: Either String String -> Either String Int
+validateEither = undefined
+
+
+-- Expert Monad Operations (Questions 31-40)
+
+-- 31. Lifting Functions into Monads
+liftFunction :: Maybe Int -> Maybe Int
+liftFunction = undefined
+
+-- 32. `StateT` Monad Transformer
+stateTMonad :: StateT Int IO Int
+stateTMonad = undefined
+
+-- 33. Using `StateT` to Model Stateful Computations
+stateTExample :: StateT Int IO Int
+stateTExample = undefined
+
+-- 34. Monadic Composition with `do` Notation
+doNotationComposition :: StateT Int (Reader String) Int
+doNotationComposition = undefined
+
+-- 35. Implementing a Custom Monad
+customMonad :: Monad m => m Int -> m Int
+customMonad = undefined
+
+-- 36. `Cont` Monad Basics
+contMonad :: Cont r Int -> Int
+contMonad = undefined
+
+-- 37. Monadic Parser Combinators
+monadicParser :: String -> Maybe (Int, String)
+monadicParser = undefined
+
+-- 38. Implementing `foldM` for `IO` Monad
+foldMForIO :: Monad m => (b -> a -> m b) -> b -> [a] -> m b
+foldMForIO = undefined
+
+-- 39. `MonadPlus` Typeclass
+monadPlusExample :: MonadPlus m => m Int
+monadPlusExample = undefined
+
+-- 40. Using `MonadReader` and `MonadState`
+readerStateExample :: ReaderT String (State Int) String
+readerStateExample = undefined
+
+
+-- Mastery Monad Operations (Questions 41-50)
+
+-- 41. Implementing `liftIO`
+liftIOExample :: IO a -> IO a
+liftIOExample = undefined
+
+-- 42. Nested Monad Transformers
+nestedMonads :: StateT Int (MaybeT IO) Int
+nestedMonads = undefined
+
+-- 43. `MonadFix` Typeclass
+monadFixExample :: MonadFix m => m Int
+monadFixExample = undefined
+
+-- 44. Monadic Laws
+monadicLawsExample :: Maybe Int -> Maybe Int
+monadicLawsExample = undefined
+
+-- 45. `ContT` Monad Transformer
+contTMonad :: ContT r IO Int -> Int
+contTMonad = undefined
+
+-- 46. Generalizing State with `StateT`
+generalizeState :: StateT Int IO Int
+generalizeState = undefined
+
+-- 47. Advanced Monad Transformers
+advancedMonadTransformers :: StateT Int (WriterT String IO) Int
+advancedMonadTransformers = undefined
+
+-- 48. Laws for Custom Monads
+customMonadLaws :: Monad m => m Int -> m Int
+customMonadLaws = undefined
+
+-- 49. Using `runContT`
+runContTExample :: ContT r IO Int -> Int
+runContTExample = undefined
+
+-- 50. Implementing a Monad for Free
+freeMonadExample :: Free f Int -> Int
+freeMonadExample = undefined
