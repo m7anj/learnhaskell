@@ -84,7 +84,19 @@ filterMap p f (x:xs)
 
 -- 13. Find first element satisfying a condition
 findFirst :: (a -> Bool) -> [a] -> Maybe a
-findFirst = undefined
+findFirst _ [] = Nothing
+findFirst p (x:xs) 
+  |  = Just x
+  | otherwise = findFirst p xs 
+
+-- Write a function frequencyCounter which takes a list of integers and returns a list of tuples, 
+-- the first element of the tuple being the member of the list and the second element of the tuple 
+-- being how many times that number appeared in the list
+frequencyCounter :: Eq a => [a] -> [(a, Int)]
+frequencyCounter xs = [(x, length [y | y <- xs, y == x]) | x <- nub xs]
+
+
+
 
 -- 14. Partition a list based on a predicate
 partition' :: (a -> Bool) -> [a] -> ([a], [a])
