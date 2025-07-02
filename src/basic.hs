@@ -1,11 +1,11 @@
--- 50 Pattern Matching and Helper Function Questions
--- Focus on medium-complexity problems requiring helper functions and pattern matching
-
 -- List Operations with Helper Functions (Questions 1-25)
 
--- 1. Insert an element at a specific position
+-- 1. Insert an element at a specific index
 insertAt :: Int -> a -> [a] -> [a]
-insertAt = undefined
+insertAt 0 b [] = [b]
+insertAt n b (x:xs)
+    | n > 0 = insertAt (n-1) b xs
+    | otherwise = insertAt n b (x:xs)
 
 -- 2. Remove element at specific position
 removeAt :: Int -> [a] -> [a]
@@ -104,7 +104,7 @@ allPairs :: [a] -> [(a, a)]
 allPairs = undefined
 
 -- Tree Operations with Helper Functions (Questions 26-50)
-data Tree a = Empty | Node a (Tree a) (Tree a) deriving (Show, Eq)
+data TreeOne a = Empty | Node a (TreeOne a) (TreeOne a) deriving (Show, Eq)
 
 -- 26. Insert element into a binary search tree
 insertBST :: Ord a => a -> Tree a -> Tree a

@@ -1,3 +1,21 @@
+import Control.Monad
+import Control.Monad.State
+import Control.Monad.Reader
+import Control.Monad.Writer
+
+-- For monad transformers (StateT, ReaderT, WriterT, etc.)
+import Control.Monad.Trans
+import Control.Monad.Trans.Reader
+import Control.Monad.Trans.Writer
+import Control.Monad.Trans.Maybe
+import Control.Monad.Trans.State
+import Control.Monad.Trans.Class
+import Control.Monad.IO.Class
+import Control.Monad.Fix
+
+-- For Continuation monads (ContT)
+import Control.Monad.Cont
+
 -- 50 Monad Questions
 -- Focus on monadic concepts, ranging from basic to advanced
 
@@ -210,7 +228,3 @@ customMonadLaws = undefined
 -- 49. Using `runContT`
 runContTExample :: ContT r IO Int -> Int
 runContTExample = undefined
-
--- 50. Implementing a Monad for Free
-freeMonadExample :: Free f Int -> Int
-freeMonadExample = undefined
