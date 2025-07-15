@@ -39,43 +39,68 @@ bstContains n (Fork x l r)
     | n == x = True
     | otherwise = bstContains n l || bstContains n r
 
--- 6. Insert value into BST
-bstInsert :: Ord a => a -> BT a -> BT a
-bstInsert =  
 
 -- 7. Get all values in sorted order (in-order traversal)
 bstToList :: BT a -> [a]
-bstToList = undefined
+bstToList Empty = []
+bstToList (Fork x l r) = bstToList l ++ [x] ++ bstToList r
 
--- 8. Create BST from single value
-singletonBST :: a -> BT a
-singletonBST = undefined
 
 -- 9. Find minimum value in BST
 bstMin :: Ord a => BT a -> Maybe a
-bstMin = undefined
+bstMin Empty = Nothing
+bstMin (Fork x Empty Empty) = Just x
+bstMin (Fork _ l _) = bstMin l
+
 
 -- 10. Find maximum value in BST
 bstMax :: Ord a => BT a -> Maybe a
-bstMax = undefined
+bstMax Empty = Nothing
+bstMax (Fork x Empty Empty) = Just x
+bstMax (Fork x l r) = bstMax r
 
 -- MEDIUM BST QUESTIONS (11-20)
 
 -- 11. Check if tree is valid BST
 isValidBST :: Ord a => BT a -> Bool
-isValidBST = undefined
+isValidBST Empty = True
+isValidBST (Fork x l r) = checkSorted (listify (Fork x l r))
+
+listify :: BT a -> [a]
+listify Empty = []
+listify (Fork x Empty Empty) = [x]
+listify (Fork x l r) = listify l ++ [x] ++ listify r
+
+checkSorted :: (Ord a) => [a] -> Bool
+checkSorted [] = True
+checkSorted [x] = True
+checkSorted (x:xs) = if x < head xs then checkSorted xs else False
 
 -- 12. Delete value from BST
 bstDelete :: Ord a => a -> BT a -> BT a
-bstDelete = undefined
+bstDelete = undefined -- i will do this after
 
 -- 13. Count nodes at specific level
 bstNodesAtLevel :: Int -> BT a -> Int
-bstNodesAtLevel = undefined
+bstNodesAtLevel 0 (Fork x l Empty) = 1
+bstNodesAtLevel 0 (Fork x Empty _) = 0
+bstNodesAtLevel 0 (Fork x l r) = 1
+bstNodesAtLevel n (Fork x l r) = bstNodesAtLevel (n-1) l + bstNodesAtLevel (n-1) r
 
 -- 14. Check if BST is balanced (height difference ≤ 1)
 isBSTBalanced :: BT a -> Bool
-isBSTBalanced = undefined
+isBSTBalanced Empty = True
+isBSTBalanced (Fork x l r) = diff (height l) (height r) <= 1
+
+diff :: Int -> Int -> Int
+diff x y
+    | x == y = 0
+    | x > y = x - y
+    | y < x = y - x
+
+height :: BT a -> Int
+height Empty = 0
+height (Fork x l r) = 1 + max (bstHeight l) (bstHeight r)
 
 -- 15. Find kth smallest element
 kthSmallest :: Int -> BT a -> Maybe a
@@ -283,8 +308,11 @@ testBST1 :: BT Int
 testBST1 = Fork 5 (Fork 3 (Fork 1 Empty Empty) (Fork 4 Empty Empty)) 
                   (Fork 7 (Fork 6 Empty Empty) (Fork 9 Empty Empty))
 
-testBST2 :: BT Int  
-testBST2 = Fork 2 (Fork 1 Empty Empty) (Fork 3 Empty Empty)
+
+testBST2 :: BT Int
+testBST2 = Fork 5 (Fork 3 Empty Empty) (Fork 7 (Fork 6 Empty Empty) Empty)
+
+
 
 -- Sample Rose trees for testing
 testRose1 :: Rose Int
