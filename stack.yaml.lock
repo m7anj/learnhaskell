@@ -3,7 +3,32 @@
 # For more information, please see the documentation at:
 #   https://docs.haskellstack.org/en/stable/topics/lock_files
 
-packages: []
+packages:
+- completed:
+    hackage: acme-missiles-0.3@sha256:2ba66a092a32593880a87fb00f3213762d7bca65a687d45965778deb8694c5d1,613
+    pantry-tree:
+      sha256: 614bc0cca76937507ea0a5ccc17a504c997ce458d7f2f9e43b15a10c8eaeb033
+      size: 226
+  original:
+    hackage: acme-missiles-0.3
+- completed:
+    commit: e7b331f14bcffb8367cd58fbfc8b40ec7642100a
+    git: https://github.com/commercialhaskell/stack.git
+    name: stack
+    pantry-tree:
+      sha256: 6fa5808c7dfc5a2cc8b90f26a7e744de52662420570b9092f19d3987d7fb1bf8
+      size: 23178
+    version: 1.0.5
+  original:
+    commit: e7b331f14bcffb8367cd58fbfc8b40ec7642100a
+    git: https://github.com/commercialhaskell/stack.git
+- completed:
+    hackage: mtl-2.3.1@sha256:5377696d7315e2ef31a8d15d67b22d733c20cac2caf8b26756ff8524c8217e6d,1868
+    pantry-tree:
+      sha256: ac3cf1dc9ef397512d4bf8f2c3fbe4d64fb8aabd253288b34bf86c09ae234d4f
+      size: 1853
+  original:
+    hackage: mtl-2.3.1
 snapshots:
 - completed:
     sha256: 1191e70bcd219fb660a5bf5d43a0fb235ef12a891994fd02d02643f61d6755ed

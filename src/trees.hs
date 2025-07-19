@@ -74,7 +74,7 @@ listify (Fork x l r) = listify l ++ [x] ++ listify r
 checkSorted :: (Ord a) => [a] -> Bool
 checkSorted [] = True
 checkSorted [x] = True
-checkSorted (x:xs) = if x < head xs then checkSorted xs else False
+checkSorted (x:xs) = if xs /= [] && x < head xs then checkSorted xs else False
 
 -- 12. Delete value from BST
 bstDelete :: Ord a => a -> BT a -> BT a
@@ -104,15 +104,25 @@ height (Fork x l r) = 1 + max (bstHeight l) (bstHeight r)
 
 -- 15. Find kth smallest element
 kthSmallest :: Int -> BT a -> Maybe a
-kthSmallest = undefined
+kthSmallest _ Empty = Nothing
+kthSmallest n (Fork x l r) = Just (last (take n (treeToList (Fork x l r))))
+
+treeToList :: BT a -> [a]
+treeToList Empty = []
+treeToList (Fork x l r) = treeToList l ++ [x] ++ treeToList r
 
 -- 16. Get all values between two bounds
 bstRange :: Ord a => a -> a -> BT a -> [a]
-bstRange = undefined
+bstRange _ _ Empty = []
+bstRange a b (Fork x l r)
+    | a < b = [x | x <- treeToList (Fork x l r), x > a && x < b]
+    | otherwise = []
 
 -- 17. Count leaves in BST
 bstCountLeaves :: BT a -> Int
-bstCountLeaves = undefined
+bstCountLeaves Empty = 0
+bstCountLeaves (Fork _ Empty Empty) = 1
+bstCountLeaves (Fork x l r) = bstCountLeaves l + bstCountLeaves r
 
 -- 18. Find successor of given value
 bstSuccessor :: Ord a => a -> BT a -> Maybe a
@@ -120,7 +130,7 @@ bstSuccessor = undefined
 
 -- 19. Check if two BSTs are identical
 bstEqual :: Eq a => BT a -> BT a -> Bool
-bstEqual = undefined
+bstEqual (Fork x l r) (Fork y a b) = bstToList (Fork x l r) == bstToList (Fork y a b)
 
 -- 20. Mirror a BST (swap left and right)
 bstMirror :: BT a -> BT a
