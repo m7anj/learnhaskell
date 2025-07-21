@@ -4,6 +4,7 @@
 module MonadPractice where
 
 import Control.Monad.State
+import Control.Monad.Writer
 
 -- ===== MAYBE MONAD BASICS (Q1-15) =====
 
@@ -161,32 +162,54 @@ doubleState = do
 resetCounter :: State Int Int
 resetCounter = do
     x <- get
-    put 
+    put 0
+    return x
+
 
 -- Q24: Conditional state update
 -- Increment if current state is even, decrement if odd
 conditionalUpdate :: State Int ()
-conditionalUpdate = undefined
+conditionalUpdate = do
+    x <- get
+    if isEven x then put (x+1) else put (x-1)
+    return x 
+
+isEven :: Int -> Bool
+isEven x = x `mod` 2 == 0
 
 -- Q25: State with tuple - increment first, decrement second
 updatePair :: State (Int, Int) ()
-updatePair = undefined
+updatePair = do
+    (x,y) <- get
+    put (x+1, y+1)
+    return (x,y)
 
 -- Q26: Get sum of pair state
 getPairSum :: State (Int, Int) Int
-getPairSum = undefined
+getPairSum = do
+    (x,y) <- get
+    return (x+y)
 
 -- Q27: Swap elements in pair state
 swapPair :: State (Int, Int) ()
-swapPair = undefined
+swapPair = do
+    (x,y) <- get
+    put (y,x)
+    return ()
 
 -- Q28: String state - append character
 appendChar :: Char -> State String ()
-appendChar = undefined
+appendChar x = do
+    str <- get
+    put (str:x)
+    return (str)
 
 -- Q29: String state - get length
 getStringLength :: State String Int
-getStringLength = undefined
+getStringLength = do
+    str <- get
+    return (length str)
+
 
 -- Q30: Complex state update - manage bank balance
 -- Deposit money (must be positive), return new balance
