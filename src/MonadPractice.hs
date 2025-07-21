@@ -63,12 +63,15 @@ addStringNumbers x y = safeRead x >>= \num1 ->
 -- Q8: List operations with Maybe
 -- Find first element that satisfies predicate
 findFirst :: (a -> Bool) -> [a] -> Maybe a
-findFirst = undefined
+findFirst p [] = Nothing
+findFirst p (x:xs) = if p x then Just x else findFirst p xs 
 
 -- Q9: Chain list operations
 -- Find first even number, then divide by 2
 findEvenHalf :: [Int] -> Maybe Int
-findEvenHalf = undefined
+findEvenHalf y = do
+    findEven <- findFirst even y
+    return (findEven `div` 2)
 
 -- Q10: Maybe with custom data types
 data Person = Person String Int deriving Show  -- name, age
@@ -102,39 +105,63 @@ mapMaybe = undefined
 sumThreeMaybe :: Maybe Int -> Maybe Int -> Maybe Int -> Maybe Int
 sumThreeMaybe = undefined
 
+-- ==== Extra Maybe Monads ====
+
+safeLookup :: Int -> [Int] -> Maybe Int
+safeLookup 0 (x:xs) = Just x
+safeLookup _ [] = Nothing
+safeLookup n (x:xs) = do
+    result <- safeLookup (n-1) xs
+    return result
+
+
 -- ===== STATE MONAD BASICS (Q16-30) =====
 
 -- Q16: Basic State - just return the current state
 getState :: State Int Int
-getState = undefined
+getState = get
 
 -- Q17: Basic State - set state to a specific value
 setState :: Int -> State Int ()
-setState = undefined
+setState x = 
 
 -- Q18: Simple counter - increment state by 1
 increment :: State Int ()
-increment = undefined
+increment = 
+    x <- get
+    put (x+1)
 
 -- Q19: Decrement counter
 decrement :: State Int ()
-decrement = undefined
+decrement = do
+    x <- get
+    put (x+1)
 
 -- Q20: Add specific amount to counter
 addToCounter :: Int -> State Int ()
-addToCounter = undefined
+addToCounter n = do
+    x <- get
+    put (x+n)
 
 -- Q21: Get current value and increment
 getAndIncrement :: State Int Int
-getAndIncrement = undefined
+getAndIncrement = do
+    x <- get
+    put (x+1)
+    return x
 
 -- Q22: Double the current state
 doubleState :: State Int ()
-doubleState = undefined
+doubleState = do
+    x <- get
+    put (x+x)
+    return x
 
 -- Q23: Reset counter to zero and return old value
 resetCounter :: State Int Int
-resetCounter = undefined
+resetCounter = do
+    x <- get
+    put 
 
 -- Q24: Conditional state update
 -- Increment if current state is even, decrement if odd
