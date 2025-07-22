@@ -214,7 +214,13 @@ getStringLength = do
 -- Q30: Complex state update - manage bank balance
 -- Deposit money (must be positive), return new balance
 deposit :: Int -> State Int (Maybe Int)
-deposit = undefined
+deposit n
+    | n < 0 = return (Nothing)
+    | otherwise = do
+        oldBalance <- get
+        let newBalance = oldBalance + n
+        put newBalance
+        return (Just newBalance)
 
 -- ===== EXAM PATTERN PREP (Q31-40) =====
 
@@ -222,7 +228,13 @@ deposit = undefined
 -- F(0) = 0, F(1) = 1, F(n) = F(n-1) + F(n-2)
 -- Optimize using State to remember last two values
 fibState :: Int -> State (Int, Int) ()
-fibState = undefined
+fibState 0 = ()
+fibState n = do
+    (a,b) <- get
+    let newA = b
+    let newB = a + b
+    put (newA, newB)
+    fibState (n-1)
 
 runFib :: Int -> Int
 runFib n = let ((),(a,b)) = runState (fibState n) (0,1) in b
@@ -230,7 +242,14 @@ runFib n = let ((),(a,b)) = runState (fibState n) (0,1) in b
 -- Q32: Three-value sequence
 -- T(0) = 1, T(1) = 1, T(2) = 1, T(n) = T(n-1) + T(n-2) + T(n-3)
 tribState :: Int -> State (Int, Int, Int) ()
-tribState = undefined
+tribState 0 = return ()
+tribState n = do
+    (a,b,c) <- get
+    let newA = b
+    let newB = a + b
+    let newC = a + b + c
+    put (newA, newB, newC)
+    tribState (n-1)
 
 runTrib :: Int -> Int
 runTrib n = let ((),(a,b,c)) = runState (tribState n) (1,1,1) in c
@@ -260,17 +279,28 @@ simplePentaState = undefined
 -- Q37: Accumulator pattern
 -- Count how many times we've called a function, return count each time
 countCalls :: State Int Int
-countCalls = undefined
+countCalls = do
+    n <- get
+    put (n+1)
+    return n
 
 -- Q38: Sum accumulator
--- Add input to running total, return current total
-addToTotal :: Int -> State Int Int
-addToTotal = undefined
+-- Add running total to state, return total
+accumulateTotal :: [Int] -> State Int Int
+accumulateTotal [] = return 0
+accumulateTotal (x:xs) = do
+    currentTotal <- get
+    let runningTotal = currentTotal + x
+    put (runningTotal)
+    return (accumulateTotal xs)
 
 -- Q39: List building with state
 -- Add element to list stored in state
 addToList :: a -> State [a] ()
-addToList = undefined
+addToList x = do
+    list <- get
+    put (list:x)
+    return ()
 
 -- Q40: Complex state with validation
 -- Bank account: balance and transaction count
