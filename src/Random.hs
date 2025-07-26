@@ -1,25 +1,55 @@
+module Random where
+
 import Control.Monad.State
 import Control.Monad.Writer
 
+-- Binary Search Tree (BST)
+data BTree a = Nil
+             | Node (BTree a) a (BTree a)  -- Left subtree, value, right subtree
+-- Rose Tree
+data Rose a = Rose a [Rose a]  -- A node with a value and a list of subtrees (children)
+
+
+main :: IO ()
+main = putStrLn "Hello, Haskell!"
+
 -- Q1: Count occurrences of a specific value in a list
 countOccurrences :: Eq a => a -> [a] -> Int
-countOccurrences = undefined
+countOccurrences xs = length [x | x <- xs, x == n]
 
 -- Q2: Check if a binary tree is symmetric
 isSymmetric :: Eq a => BTree a -> Bool
-isSymmetric = undefined
+isSymmetric Nil = False
+isSymmetric (Node l x r) = (reverse (listify l)) == (listify r) && (reverse (listify r)) == (listify l)
+
+listify :: BTree a -> [a]
+listify Nil = []
+listify (Node l x r) = listify l ++ [x] ++ listify r
+
 
 -- Q3: Implement a function using the State monad to calculate the sum of a list
 sumListWithState :: [Int] -> State Int Int
-sumListWithState = undefined
+sumListWithState [] = do
+    final <- get
+    return (final)
+sumListWithState (x:xs) = do
+    current <- get
+    let new = current + x
+    put (new)
+    next <- sumListWithState xs
+    return (next)
 
 -- Q4: Reverse a list and remove duplicates
 reverseAndRemoveDuplicates :: Eq a => [a] -> [a]
-reverseAndRemoveDuplicates = undefined
+reverseAndRemoveDuplicates x = rev (removeDuplicates x)
+
+removeDuplicates :: [a] -> [a]
+removeDuplicates [] = []
+removeDuplicates (x:xs) = if (x `elem` xs) then (removeDuplicates xs) otherwise ([x] ++ (removeDuplicates xs))
 
 -- Q5: Return the length of a binary tree
 treeLength :: BTree a -> Int
-treeLength = undefined
+treeLength (Node l x r) = 1 + length (listify l) + length (listify r)
 
 -- Q6: Implement a function that checks if a list of integers is sorted in ascending order.
 isSorted :: [Int] -> Bool
@@ -29,9 +59,6 @@ isSorted = undefined
 sumList :: [Int] -> Int
 sumList = undefined
 
--- Q8: Return the depth of a binary tree
-maxDepth :: BTree a -> Int
-maxDepth = undefined
 
 -- Q9: Reverse the order of a list and remove duplicates
 reverseAndRemoveDuplicates :: Eq a => [a] -> [a]
@@ -39,11 +66,14 @@ reverseAndRemoveDuplicates = undefined
 
 -- Q10: Find the maximum value in a binary tree
 maxValue :: BTree a -> Maybe a
-maxValue = undefined
+maxValue Empty = Nothing
+maxValue (Node l x r)= Just (maximum (listify l) ++ x ++ (listify r)) 
 
 -- Q11: Count nodes at a specific depth level
 nodesAtDepth :: Int -> BTree a -> Int
-nodesAtDepth = undefined
+nodesAtDepth 0 (Node Empty _ _) = 0
+nodesAtDepth 0 (Node l x Empty) = 1
+nodesAtDepth n (Node l x r) = (nodesAtDepth (n-1) l) + (nodesAtDepth (n-1) r)
 
 -- Q12: Check if a tree is balanced
 isBalanced :: BTree a -> Bool
