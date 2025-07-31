@@ -13,17 +13,23 @@ data Tree a = Tip a | Fork (Tree a) (Tree a) deriving (Show, Eq)
 -- Q1: Count nodes at specific depth level
 -- Depth 0 = root, depth 1 = children of root, etc.
 nodesAtDepth :: Int -> BTree a -> Int
-nodesAtDepth = undefined
+nodesAtDepth = undefined -- Don't need to do this
 
 -- Q2: Check if tree is perfectly balanced
 -- Every internal node has exactly two children
 isPerfectlyBalanced :: BTree a -> Bool
-isPerfectlyBalanced = undefined
+isPerfectlyBalanced (Node Empty x Empty) = True
+isPerfectlyBalanced (Node l x Empty) = False
+isPerfectlyBalanced (Node Empty _ r) = False
+isPerfectlyBalanced (Node l x r) = 
+    isPerfectlyBalanced l && isPerfectlyBalanced r
 
 -- Q3: Find maximum width of any level
 -- Width = number of nodes at that level
 maxWidth :: BTree a -> Int
-maxWidth = undefined
+maxWidth (Node l x r) n = maxWidth l (n-1) + maxWidth r (n-1)
+maxWidth (Node _ x _) 0 = 1
+maxWidth (Node _ Empty _) = 0
 
 -- Q4: Count leaves in rose tree
 -- A leaf has no branches (empty list)
@@ -523,4 +529,13 @@ isBST (Node 5 (Node 7 Empty Empty) (Node 3 Empty Empty)) = False
 
 The key is understanding what each operation means conceptually,
 then implementing the recursive pattern correctly.
+
+
 -}
+
+
+
+
+
+countNulls :: Json -> State Integer () 
+countNulls x

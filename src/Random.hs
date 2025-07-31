@@ -52,17 +52,15 @@ treeLength :: BTree a -> Int
 treeLength (Node l x r) = 1 + length (listify l) + length (listify r)
 
 -- Q6: Implement a function that checks if a list of integers is sorted in ascending order.
-isSorted :: [Int] -> Bool
-isSorted = undefined
+isSorted :: [Int] -> 
+isSorted [] = True
+isSorted [a] = True
+isSorted (x:xs) = if x > (head xs) then isSorted xs otherwise False
 
 -- Q7: Calculate the sum of all numbers in a list
 sumList :: [Int] -> Int
-sumList = undefined
-
-
--- Q9: Reverse the order of a list and remove duplicates
-reverseAndRemoveDuplicates :: Eq a => [a] -> [a]
-reverseAndRemoveDuplicates = undefined
+sumList [] = 0
+sumList (x:xs) = x + sumList xs
 
 -- Q10: Find the maximum value in a binary tree
 maxValue :: BTree a -> Maybe a
@@ -86,7 +84,7 @@ sumList = undefined
 -- Q14: Check if a tree is a binary search tree (BST)
 isBST :: Ord a => BTree a -> Bool
 isBST = undefined
-
+  
 -- Q15: Count leaves in a rose tree
 countLeaves :: Rose a -> Int
 countLeaves = undefined
@@ -94,8 +92,6 @@ countLeaves = undefined
 -- Q16: Find the height of a binary tree
 height :: BTree a -> Int
 height = undefined
-
--- Q17: Flatten a binary tree into a list
 flattenTree :: BTree a -> [a]
 flattenTree = undefined
 
