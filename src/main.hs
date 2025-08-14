@@ -39,4 +39,30 @@ applyTwiceTwiceTst = applyTwice applyTwiceTest 3
 
 
 
--- ==  == --
+-- == 2023 Test2 Q3 == --
+
+penta :: Integer -> Integer
+penta 0 = 0
+penta 1 = 1
+penta 2 = 2
+penta 3 = 3
+penta 4 = 4
+penta n =     penta (n-5)
+        + 2 * penta (n-4)
+        - 3 * penta (n-3)
+        + 4 * penta (n-2)
+        - 5 * penta (n-1)
+
+
+pentaFast :: Integer -> Integer
+pentaFast n = a
+  where
+    ((),(a,b,c,d,e)) = runState (state4Penta n) (0,1,2,3,4)
+
+statePenta :: Integer -> State (Integer,Integer,Integer,Integer,Integer) ()
+statePenta
+    | n <= 4 = return ()
+    | otherwise = do
+
+
+        
